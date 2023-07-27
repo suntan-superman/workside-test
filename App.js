@@ -20,6 +20,9 @@ import MIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import { IconRegistry, ApplicationProvider } from "@ui-kitten/components";
 import * as eva from "@eva-design/eva";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import awsconfig from './src/aws-exports';
+import { Amplify } from 'aws-amplify';
+import { withAuthenticator } from 'aws-amplify-react-native';
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import {
@@ -29,6 +32,13 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
+
+Amplify.configure({
+  ...awsconfig,
+  Analytics: {
+    disabled: true,
+  },
+});
 
 import RootDrawerNavigator from './routes/Drawer';
 
@@ -213,4 +223,6 @@ const App = () => {
     </>
   );
 };
-export default App;
+
+export default withAuthenticator(App);
+
